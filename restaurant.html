@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<!--
+  福安家常菜馆 - 官方网站（ARG Demo）
+  搜索关键词推进解谜，图片证物已嵌入
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>福安家常菜馆 - 官方网站</title>
+<style>
+  * {
+    margin:0; padding:0; box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+    background: #f5f2eb;
+    color: #3a3328;
+    min-height: 100vh;
+    touch-action: manipulation;
+  }
+  .topbar {
+    background: #8c1f1f;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+  .header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    background: linear-gradient(#fff8ef, #f5f2eb);
+    border-bottom: 3px solid #8c1f1f;
+  }
+  .header h1 {
+    font-size: 42px;
+    color: #8c1f1f;
+    letter-spacing: 8px;
+    margin-bottom: 8px;
+  }
+  .header .sub { font-size: 14px; color: #999; letter-spacing: 2px; }
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 14px;
+    background: #fff;
+    border-bottom: 1px solid #e0d8c8;
+    font-size: 15px;
+  }
+  .nav a { color: #3a3328; text-decoration: none; }
+  .nav a:hover { color: #8c1f1f; }
+  .search-area {
+    max-width: 640px;
+    margin: 40px auto;
+    text-align: center;
+  }
+  .search-box {
+    display: flex;
+    border: 2px solid #8c1f1f;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .search-box input {
+    flex: 1;
+    border: none;
+    padding: 14px 20px;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+  }
+  .search-box button {
+    background: #8c1f1f;
+    color: #fff;
+    border: none;
+    padding: 0 32px;
+    font-size: 16px;
+    cursor: pointer;
+    letter-spacing: 2px;
+  }
+  .search-box button:hover { background: #a52a2a; }
+  .content {
+    max-width: 800px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+    font-size: 15px;
+    line-height: 2;
+  }
+  .content h2 { color: #8c1f1f; margin-bottom: 12px; font-size: 22px; }
+  .card {
+    background: #fff;
+    border: 1px solid #e0d8c8;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 17px; margin-bottom: 10px; color: #5a4a38; display: flex; align-items: center; gap: 8px; }
+  .card p { color: #6b6050; font-size: 14px; }
+  .badge {
+    background: #8c1f1f;
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+  }
+  .lost-found {
+    background: #fffaf3;
+    border: 1px solid #d4b896;
+  }
+  .lost-found strong { color: #8c1f1f; font-weight: 600; }
+  .evidence-img {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 8px;
+    border: 1px solid #e0d8c8;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    margin: 14px 0;
+    display: block;
+  }
+  .evidence-caption {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+  }
+  .progress-dot {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: #3a3328;
+    color: #fff;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: bold;
+    opacity: 0.7;
+  }
+  .footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+    color: #b0a898;
+    border-top: 1px solid #e0d8c8;
+    background: #fff;
+  }
+  .hidden-tip { color: #c0392b; font-size: 13px; margin-top: 8px; display: none; }
+
+  /* ── 手机端适配 ── */
+  @media (max-width: 640px) {
+    .topbar { font-size: 11px; padding: 8px; letter-spacing: 1px; }
+    .header { padding: 28px 16px 16px; }
+    .header h1 { font-size: 28px; letter-spacing: 4px; }
+    .header .sub { font-size: 12px; }
+    .nav {
+      gap: 24px; padding: 10px; font-size: 13px;
+      overflow-x: auto; white-space: nowrap;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+    }
+    .search-area { margin: 24px auto; padding: 0 16px; }
+    .search-box input {
+      font-size: 16px; /* iOS防聚焦缩放 */
+      padding: 12px 16px;
+      min-height: 48px;
+    }
+    .search-box button {
+      padding: 12px 22px;
+      font-size: 15px;
+      letter-spacing: 1px;
+      min-height: 48px;
+    }
+    .content { padding: 0 14px; font-size: 14px; line-height: 1.9; }
+    .content h2 { font-size: 19px; }
+    .card { padding: 18px; margin-bottom: 14px; }
+    .card h3 { font-size: 15px; }
+    .card p { font-size: 13.5px; }
+    .progress-dot { width: 34px; height: 34px; font-size: 12px; bottom: 14px; right: 14px; }
+    .footer { padding: 20px; font-size: 11px; }
+    .footer p { line-height: 1.8; }
+  }
+  @media (max-width: 380px) {
+    .header h1 { font-size: 24px; }
+    .nav { gap: 16px; font-size: 12px; }
+    .card { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">福安家常菜馆 · 二十年老店 · 欢迎光临</div>
+  <div class="header">
+    <h1>福安家常菜馆</h1>
+    <div class="sub">FU AN FAMILY RESTAURANT · SINCE 2005</div>
+  </div>
+  <div class="nav">
+    <a href="#">首页</a>
+    <a href="#">菜单</a>
+    <a href="#">门店</a>
+    <a href="#">联系</a>
+  </div>
+
+  <div class="search-area">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="站内搜索…" autocapitalize="off" autocomplete="off" onkeydown="if(event.key==='Enter')doSearch()">
+      <button onclick="doSearch()">搜索</button>
+    </div>
+    <div class="hidden-tip" id="searchTip"></div>
+  </div>
+
+  <div class="content" id="mainContent">
+    <h2>欢迎光临</h2>
+    <div class="card">
+      <h3>关于本店</h3>
+      <p>福安家常菜馆创立于2005年，主营豫菜，招牌菜有胡辣汤、烩面、黄河鲤鱼。本店始终坚持「家常味道，福气安康」的经营理念，二十年来深受街坊邻里喜爱。</p>
+    </div>
+    <div class="card">
+      <h3>本周推荐</h3>
+      <p>▶ 福气满堂全家福（适合家庭聚餐）<br>▶ 安神小米粥（新客半价）<br>▶ 好运连连鱼（限量供应）</p>
+    </div>
+    <div class="card lost-found">
+      <h3>失物招领 <span class="badge">置顶</span></h3>
+      <p><strong>顾铭</strong>先生：您遗忘在本店的外套已妥善保管于柜台，外套口袋中的字条我们未拆看。请凭有效证件到店领取。</p>
+      <p style="margin-top:8px;color:#999;">管理员 发布于 2026-08-18 · 浏览 1</p>
+    </div>
+    <div class="card">
+      <h3>最新动态</h3>
+      <p>2026年8月门店装修公告：本店将于下月进行装修，暂停营业两周，敬请谅解。</p>
+      <p style="margin-top:8px;color:#999;">发布于 2026-08-20 · 浏览 1</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>地址：中原市福安区平安路37号 ｜ 电话：0371-XXXXXXXX</p>
+    <p>© 2005-2026 福安家常菜馆 版权所有</p>
+  </div>
+  <div class="progress-dot">1</div>
+
+<script>
+// ============ 关键词解谜系统 ============
+var STORY = {
+  '顾铭': {
+    title: '搜索结果：顾铭',
+    pages: 2,
+    html: '<h2>关于「顾铭」的记录</h2>' +
+      '<div class="card"><h3>店内留言</h3>' +
+      '<p>8月17日傍晚，一个年轻人来店里吃了碗烩面，付了钱却忘了拿外套。外套口袋里有张写满字迹的纸条，我们保管在柜台，等待失主认领。若您认识他，请转告。</p>' +
+      '<p style="margin-top:8px;color:#999;">管理员 发布于 2026-08-18</p></div>',
+  },
+  '纸条': {
+    title: '搜索结果：纸条',
+    pages: 3,
+    html: '<h2>失物招领 · 纸条内容</h2>' +
+      '<div class="card"><h3>纸条照片（柜台扫描件）</h3>' +
+      '<img src="note.jpg" class="evidence-img" alt="纸条">' +
+      '<p class="evidence-caption">图：外套口袋中发现的字条，管理员未拆看，仅扫描存档</p>' +
+      '<p style="margin-top:12px;color:#c0392b;">纸条背面画着一个模糊的符号，像一张符咒。</p></div>',
+  },
+  '符': {
+    title: '搜索结果：符',
+    pages: 4,
+    html: '<h2>「符」？</h2>' +
+      '<div class="card"><h3>员工回忆</h3>' +
+      '<p>你问「符」？——后厨的刘师傅倒是提过，顾家孩子每年中元节前都会来店里订一桌「好运席」，还让我们在门口贴一张他带来的符。</p>' +
+      '<img src="talisman.png" class="evidence-img" style="max-width:320px;" alt="符咒">' +
+      '<p class="evidence-caption">图：监控截图 · 8月17日 23:14 · 门口左侧那张符</p>' +
+      '<p style="margin-top:12px;color:#c0392b;">提示：也许应该看看「菜单」里有没有「好运席」。</p></div>',
+  },
+  '好运席': {
+    title: '搜索结果：好运席',
+    pages: 5,
+    html: '<h2>隐藏菜单 · 好运席</h2>' +
+      '<div class="card"><h3>⚠ 管理员警告</h3>' +
+      '<p>此页面不应被访客看到。若你通过正常渠道进入本站，请立即关闭。</p>' +
+      '<p style="margin-top:12px;">……</p>' +
+      '<p>你执意要看，那便告诉你：好运席不是菜，是一道「替」。点了它的人，把一年的坏运气折进一张符里，由店里代为「消化」。今年符不见了——贴在门口的那张，8月18日凌晨被人揭走了。</p>' +
+      '<p style="margin-top:8px;color:#c0392b;">顾铭失踪前，最后一个见过他的，是值夜班的刘师傅。搜索「刘师傅」。</p></div>',
+  },
+  '刘师傅': {
+    title: '搜索结果：刘师傅',
+    pages: 6,
+    html: '<h2>刘师傅的口述</h2>' +
+      '<div class="card"><h3>8月17日深夜</h3>' +
+      '<p>「那天晚上十一点多，小顾又来了。他不是来吃饭，是来取符的。他说来不及了，符再贴着会出事。我劝他别上山，他说他弟弟被『借』走了运，不去换不回来。」</p>' +
+      '<p>「我问他弟弟是谁——他说，他弟弟叫顾晴。」</p>' +
+      '<p style="margin-top:12px;color:#c0392b;">等一下。你……不是顾晴吗？</p></div>',
+  },
+};
+
+function doSearch() {
+  var q = document.getElementById('searchInput').value.trim();
+  var tip = document.getElementById('searchTip');
+  if (!q) { tip.style.display = 'block'; tip.textContent = '请输入关键词'; return; }
+
+  var hit = null;
+  for (var key in STORY) {
+    if (q.indexOf(key) >= 0 || key.indexOf(q) >= 0) { hit = STORY[key]; break; }
+  }
+
+  if (hit) {
+    tip.style.display = 'none';
+    document.getElementById('mainContent').innerHTML = hit.html;
+    document.querySelector('.progress-dot').textContent = hit.pages;
+    document.title = hit.title + ' - 福安家常菜馆';
+  } else {
+    tip.style.display = 'block';
+    tip.textContent = '「' + q + '」没有找到相关结果。试试其他词？';
+  }
+  document.getElementById('searchInput').value = '';
+}
+</script>
+</body>
+</html>
