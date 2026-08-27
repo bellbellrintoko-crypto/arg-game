@@ -188,7 +188,7 @@
       <button class="play-btn" id="playBtn" onclick="event.stopPropagation();togglePlay()">▶</button>
       <div class="waveform" id="waveform"></div>
     </div>
-    <div class="voice-time" id="voiceTime">0:00 / 0:26</div>
+    <div class="voice-time" id="voiceTime">0:00 / 0:31</div>
   </div>
 
   <div class="transcript" id="transcript">
@@ -249,7 +249,7 @@ audio.addEventListener('timeupdate', function() {
   var d = audio.duration || 26.7;
   document.getElementById('voiceTime').textContent =
     Math.floor(t/60) + ':' + ('0' + Math.floor(t%60)).slice(-2) +
-    ' / 0:26';
+    ' / 0:31';
   // 波形进度
   var activeBars = Math.floor(t / d * totalBars);
   for (var i = 0; i < totalBars; i++) {
